@@ -8,4 +8,7 @@
 #  updated_at :datetime         not null
 #
 class Board < ApplicationRecord
+  validates(:name, {presence: true, uniqueness: true})
+
+  has_many(:posts)
 end

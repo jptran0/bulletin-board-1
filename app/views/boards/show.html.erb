@@ -1,71 +1,80 @@
 <div>
   <div>
     <h1>
-      Board #<%= @the_board.id %> details
+      <%= @the_board.name %>
     </h1>
-
-    <div>
-      <div>
-        <a href="/boards">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_board/<%= @the_board.id %>">
-          Delete board
-        </a>
-      </div>
-    </div>
-
-    <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_board.name %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.updated_at) %> ago
-      </dd>
-    </dl>
   </div>
-</div>
 
-<hr>
+  <hr>
 
-
-<div>
   <div>
-    <h2>
-      Edit board
-    </h2>
+    <h2>Add a new post</h2>
 
-    <form action="/modify_board/<%= @the_board.id %>"  method="post" >
+    <form action="/insert_post" method="post">
       <div>
-        <label for="name_box">
-          Name
-        </label>
-
-        <input type="text" id="name_box" name="query_name" value="<%= @the_board.name %>">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title">
       </div>
 
-      <button>
-        Update board
-      </button>
+      <div>
+        <label for="body">Body</label>
+        <textarea name="body" id="body" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label for="expiration">Expires on</label>
+        <input type="date" id="expiration" name="expiration">
+      </div>
+
+      <input type="hidden" name="board_id" value="<%= @the_board.id %>">
+
+      <button>Add post</button>
     </form>
   </div>
 </div>
 
 <hr>
+
+<div>
+  <h2>Active posts</h2>
+
+  <table border="1">
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Posted on</th>
+      <th>Expires on</th>
+    </tr>
+
+    <% @active_posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.body %></td>
+        <td><%= post.posted %></td>
+        <td><%= post.expiration %></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
+
+<div>
+  <h2>Expired posts</h2>
+
+  <table border="1">
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Posted on</th>
+      <th>Expired on</th>
+    </tr>
+
+    <% @expired_posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.body %></td>
+        <td><%= post.posted %></td>
+        <td><%= post.expiration %></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
